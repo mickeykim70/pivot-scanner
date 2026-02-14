@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: pivot_scanner_db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pivot_scanner
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./data-pipeline/db_schema.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Placeholder for OpenClaw gateway
+  # openclaw:
+  #   image: openclaw/gateway:latest
+  #   container_name: openclaw_gateway
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - db
+
+volumes:
+  pgdata:
